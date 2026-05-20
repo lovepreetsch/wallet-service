@@ -5,15 +5,15 @@ services:
     image: postgres:15-alpine
     container_name: wallet-postgres
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     environment:
-      POSTGRES_DB: wallet_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_NAME:-wallet_db}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d wallet_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME:-wallet_db}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -31,9 +31,9 @@ services:
     environment:
       - DB_HOST=postgres
       - DB_PORT=5432
-      - DB_NAME=wallet_db
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
+      - DB_NAME=${DB_NAME:-wallet_db}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
 
 volumes:
   pgdata:
