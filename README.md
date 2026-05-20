@@ -22,6 +22,21 @@ Liquibase is used for database migration and Docker Compose is used to run both 
 To avoid balance issues during multiple requests, pessimistic locking is implemented while updating wallet balance.
 
 ---
+Environment Variables
+
+Application and database configurations can be changed without rebuilding containers.
+
+Example .env file:
+
+DB_NAME=wallet_db
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_PORT=5432
+
+SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/wallet_db
+SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_PASSWORD=postgres
+---
 
 # Database
 
