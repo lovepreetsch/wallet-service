@@ -37,8 +37,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidJson(HttpMessageNotReadableException ex) {
-        log.warn("Malformed JSON request: {}", ex.getMessage());
-        return buildResponse(HttpStatus.BAD_REQUEST, "Bad Request", "Malformed JSON request or invalid field format");
+        return buildResponse(HttpStatus.BAD_REQUEST, "Bad Request", "Invalid field format");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
