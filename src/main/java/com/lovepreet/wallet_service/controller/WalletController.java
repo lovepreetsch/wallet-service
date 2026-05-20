@@ -37,7 +37,7 @@ public class WalletController {
                     throw ex;
                 }
                 try {
-                    Thread.sleep(backoff * attempt); // incremental backoff
+                    Thread.sleep(backoff * attempt);
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                     throw ex;
