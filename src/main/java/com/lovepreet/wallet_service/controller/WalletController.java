@@ -21,30 +21,14 @@ public class WalletController {
         this.walletService = walletService;
     }
 
-    @PostMapping("/wallet")
-    public ResponseEntity<WalletResponse> processWalletOperation(@Valid @RequestBody WalletRequest request) {
-        int maxAttempts = 5;
-        int attempt = 0;
-        long backoff = 50; // ms
+@PostMapping("/wallet")
+public ResponseEntity<WalletResponse> processWalletOperation(
+        @Valid @RequestBody WalletRequest request) {
 
-        while (true) {
-            try {
-                WalletResponse response = walletService.processOperation(request);
-                return ResponseEntity.ok(response);
-            } catch (ConcurrencyFailureException | TransactionSystemException ex) {
-                attempt++;
-                if (attempt >= maxAttempts) {
-                    throw ex;
-                }
-                try {
-                    Thread.sleep(backoff * attempt);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    throw ex;
-                }
-            }
-        }
-    }
+    WalletResponse response = walletService.processOperation(request);
+
+    return ResponseEntity.ok(response);
+}
 
     @GetMapping("/wallets/{walletId}")
     public ResponseEntity<WalletResponse> getWalletBalance(@PathVariable UUID walletId) {
